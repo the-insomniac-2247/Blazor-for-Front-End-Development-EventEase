@@ -1,0 +1,40 @@
+@inject NavigationManager NavManager
+
+@code
+{
+    // Set the parameters to be used by the component.
+    [Parameter]
+    public int Id {get; set;}
+
+    [Parameter]
+    public string? Name {get; set;}
+
+    [Parameter]
+    public string? Date {get; set;}
+
+    [Parameter]
+    public string? Description {get; set;}
+
+    // Check if the event exists before loading it.
+    private bool Exists => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Date) && !string.IsNullOrWhiteSpace(Description);
+
+    private void NavigateToDetails()
+    {
+        NavManager.NavigateTo($"/events/details");
+    }
+}
+
+
+<!-- Component structure defined here -->
+<div>
+    @if (Exists)
+    {
+        <button @onclick="NavigateToDetails">@Name</button>
+        <p>Date: @Date</p>
+    }
+
+    else
+    {
+        <p>Event could not be found or does not exist.</p>
+    }
+</div>

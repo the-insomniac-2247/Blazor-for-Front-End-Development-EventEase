@@ -1,0 +1,15 @@
+@page "/events/details"
+@using EventEase.Components
+@inject NavigationManager NavManager
+
+<h3>Event Details</h3>
+<p>Event details will go here.</p>
+<button @onclick="ReturnHome">Back</button>
+
+@code
+{
+    public void ReturnHome()
+    {
+        NavManager.NavigateTo("/events");
+    }
+}

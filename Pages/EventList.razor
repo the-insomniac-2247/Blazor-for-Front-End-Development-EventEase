@@ -1,0 +1,36 @@
+@page "/events"
+@using EventEase.Components
+
+@code
+{
+    // Declare an Event class to hold all details about our event.
+    public class Event
+    {
+        required public int Id {get; set;}
+        required public string Name {get; set;}
+        required public string Date {get; set;}
+        required public string Description {get; set;}
+    }
+
+    // Declare a list to hold all Events.
+    private List<Event> events = new();
+
+    protected override void OnInitialized()
+    {
+        // Simulate loading event data.
+        events = new List<Event>()
+        {
+            new Event {Id = 1, Name = "Fourth of July", Date = "7/4/2025", Description = "It is the Fourth of July."},
+            new Event {Id = 2, Name = "Labor Day", Date = "9/1/2025", Description = "It is Labor Day."}
+        };
+    }
+}
+
+<PageTitle>Events</PageTitle>
+<h3>Events</h3>
+
+@foreach (var localEvent in events)
+{
+    <EventCard Id="@localEvent.Id" Name="@localEvent.Name" Date="@localEvent.Date" Description="@localEvent.Description" />
+    <hr />
+}

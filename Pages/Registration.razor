@@ -1,0 +1,52 @@
+@page "/register"
+@using EventEase.Models
+@using EventEase.Services
+@inject NavigationManager NavMan
+@inject UserTracker UserTracker
+@inject AttendanceTracker AttendanceTracker
+
+@if (!isSubmitted)
+{
+    <EditForm Model="@registree" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div>
+            <label for="name">Name: </label>
+            <InputText id="name" @bind-Value="registree.Name" class="form-control" />
+        </div>
+
+        <div>
+            <label for="email">Email: </label>
+            <InputText id="email" @bind-Value="registree.Email" class="form-control" />
+        </div>
+
+        <button type="submit">Register</button>
+        <a href="/events">Back</a>
+
+    </EditForm>
+}
+
+else
+{
+    <p>Registration Confirmed!</p>
+    <button @onclick="ReturnHome">Back to Events</button>
+}
+
+@code
+{
+    private User registree = new User();
+    bool isSubmitted = false;
+
+    private void HandleValidSubmit()
+    {
+        UserTracker.RegisterUser(registree.Name, registree.Email);
+        AttendanceTracker.RegisterAttendance(registree.Name);
+        isSubmitted = true;
+    }
+
+    private void ReturnHome()
+    {
+        NavMan.NavigateTo("/events");
+    }
+}
